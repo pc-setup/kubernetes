@@ -12,7 +12,9 @@ apt-get install \
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - #> /dev/null 2>&1
 apt-get update > /dev/null 2>&1
 add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic test"
-apt-get install docker-ce docker-ce-cli containerd.io #> /dev/null 2>&1
+#apt-get install docker-ce docker-ce-cli containerd.io #> /dev/null 2>&1
+apt install docker.io
+
 
 echo "[TASK 2] Enable and start docker service"
 systemctl enable docker >/dev/null 2>&1
@@ -52,12 +54,12 @@ echo "kubeadmin" | passwd --stdin root >/dev/null 2>&1
 # To be executed only on master nodes #
 #######################################
 
-if [[ $(hostname) =~ .*kubernetes.* ]]
+if [[ $(hostname) =~ *master.* ]]
 then
 
   # Initialize Kubernetes
   echo "[TASK 9] Initialize Kubernetes Cluster"
-  kubeadm init --pod-network-cidr=10.244.0.0/16 --ignore-preflight-errors=all >> /root/kubeinit.log 2>&1
+  kubeadm init --pod-network-cidr=10.244.0.0/16 --ignore-preflight-errors=all #>> /root/kubeinit.log 2>&1
 
   # Copy Kube admin config
   echo "[TASK 10] Copy kube admin config to root user .kube directory"
