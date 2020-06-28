@@ -54,7 +54,7 @@ echo "kubeadmin" | passwd --stdin root >/dev/null 2>&1
 # To be executed only on master nodes #
 #######################################
 
-if [[ $(hostname) =~ *master.* ]]
+if [[ $(hostname) =~ .*master.* ]]
 then
 
   # Initialize Kubernetes
